@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="500" viewBox="0 0 760 500" role="img">
+<title>AI-02 synthetic shift risk coverage</title><rect width="100%" height="100%" fill="white"/>
+<text x="30" y="30" font-family="sans-serif" font-size="18">AI-02 synthetic shift risk coverage</text>
+<path d="M80 420.0H720" stroke="#ddd"/>
+<text x="45" y="424.0" font-family="sans-serif" font-size="12">0.0</text>
+<text x="70.0" y="442" font-family="sans-serif" font-size="12">0.0</text>
+<path d="M80 350.0H720" stroke="#ddd"/>
+<text x="45" y="354.0" font-family="sans-serif" font-size="12">0.2</text>
+<text x="198.0" y="442" font-family="sans-serif" font-size="12">0.2</text>
+<path d="M80 280.0H720" stroke="#ddd"/>
+<text x="45" y="284.0" font-family="sans-serif" font-size="12">0.4</text>
+<text x="326.0" y="442" font-family="sans-serif" font-size="12">0.4</text>
+<path d="M80 210.0H720" stroke="#ddd"/>
+<text x="45" y="214.0" font-family="sans-serif" font-size="12">0.6</text>
+<text x="454.0" y="442" font-family="sans-serif" font-size="12">0.6</text>
+<path d="M80 140.0H720" stroke="#ddd"/>
+<text x="45" y="144.0" font-family="sans-serif" font-size="12">0.8</text>
+<text x="582.0" y="442" font-family="sans-serif" font-size="12">0.8</text>
+<path d="M80 70.0H720" stroke="#ddd"/>
+<text x="45" y="74.0" font-family="sans-serif" font-size="12">1.0</text>
+<text x="710.0" y="442" font-family="sans-serif" font-size="12">1.0</text>
+<polyline points="144.00,225.56 208.00,235.28 272.00,238.52 336.00,230.42 400.00,233.33 464.00,235.28 528.00,231.11 592.00,232.85 656.00,232.04 720.00,233.33" fill="none" stroke="#2563eb" stroke-width="2"/>
+<circle cx="144.00" cy="225.56" r="4" fill="#2563eb"/>
+<circle cx="208.00" cy="235.28" r="4" fill="#2563eb"/>
+<circle cx="272.00" cy="238.52" r="4" fill="#2563eb"/>
+<circle cx="336.00" cy="230.42" r="4" fill="#2563eb"/>
+<circle cx="400.00" cy="233.33" r="4" fill="#2563eb"/>
+<circle cx="464.00" cy="235.28" r="4" fill="#2563eb"/>
+<circle cx="528.00" cy="231.11" r="4" fill="#2563eb"/>
+<circle cx="592.00" cy="232.85" r="4" fill="#2563eb"/>
+<circle cx="656.00" cy="232.04" r="4" fill="#2563eb"/>
+<circle cx="720.00" cy="233.33" r="4" fill="#2563eb"/>
+<text x="440" y="55" fill="#2563eb" font-family="sans-serif" font-size="12">retrieval</text>
+<polyline points="144.00,186.67 208.00,186.67 272.00,186.67 336.00,186.67 400.00,186.67 464.00,186.67 528.00,203.33 592.00,215.83 656.00,225.56 720.00,233.33" fill="none" stroke="#dc2626" stroke-width="2"/>
+<circle cx="144.00" cy="186.67" r="4" fill="#dc2626"/>
+<circle cx="208.00" cy="186.67" r="4" fill="#dc2626"/>
+<circle cx="272.00" cy="186.67" r="4" fill="#dc2626"/>
+<circle cx="336.00" cy="186.67" r="4" fill="#dc2626"/>
+<circle cx="400.00" cy="186.67" r="4" fill="#dc2626"/>
+<circle cx="464.00" cy="186.67" r="4" fill="#dc2626"/>
+<circle cx="528.00" cy="203.33" r="4" fill="#dc2626"/>
+<circle cx="592.00" cy="215.83" r="4" fill="#dc2626"/>
+<circle cx="656.00" cy="225.56" r="4" fill="#dc2626"/>
+<circle cx="720.00" cy="233.33" r="4" fill="#dc2626"/>
+<text x="440" y="75" fill="#dc2626" font-family="sans-serif" font-size="12">literal</text>
+<polyline points="144.00,342.22 208.00,332.50 272.00,316.30 336.00,283.89 400.00,268.33 464.00,254.72 528.00,245.00 592.00,240.14 656.00,238.52 720.00,233.33" fill="none" stroke="#0f766e" stroke-width="2"/>
+<circle cx="144.00" cy="342.22" r="4" fill="#0f766e"/>
+<circle cx="208.00" cy="332.50" r="4" fill="#0f766e"/>
+<circle cx="272.00" cy="316.30" r="4" fill="#0f766e"/>
+<circle cx="336.00" cy="283.89" r="4" fill="#0f766e"/>
+<circle cx="400.00" cy="268.33" r="4" fill="#0f766e"/>
+<circle cx="464.00" cy="254.72" r="4" fill="#0f766e"/>
+<circle cx="528.00" cy="245.00" r="4" fill="#0f766e"/>
+<circle cx="592.00" cy="240.14" r="4" fill="#0f766e"/>
+<circle cx="656.00" cy="238.52" r="4" fill="#0f766e"/>
+<circle cx="720.00" cy="233.33" r="4" fill="#0f766e"/>
+<text x="440" y="95" fill="#0f766e" font-family="sans-serif" font-size="12">abstention</text>
+<text x="390" y="465" text-anchor="middle" font-family="sans-serif" font-size="14">Fraction of scheduled questions answered</text>
+<text transform="translate(20 250) rotate(-90)" text-anchor="middle" font-family="sans-serif" font-size="14">Error fraction among selected questions</text>
+<text x="30" y="490" font-family="sans-serif" font-size="10">Ranking diagnostic, including thresholds beyond operating acceptance. Shift calibration unavailable.</text>
+</svg>

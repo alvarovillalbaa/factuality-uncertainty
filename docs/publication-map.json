@@ -1,0 +1,55 @@
+{
+  "version": "0.1.0",
+  "repository": "alvarovillalbaa/factuality-uncertainty",
+  "visibility_observed": "public",
+  "pr_url": "https://github.com/alvarovillalbaa/factuality-uncertainty/pull/1",
+  "transport": "GitHub connector Git Data API; local push blocked by DNS",
+  "git_object_hash_algorithm": "sha1",
+  "payload_hash_algorithm": "sha256",
+  "source_head_local": "d80a8a1de18d7fa29c4867a8a6e921c51208ab07",
+  "source_head_remote": "73f4e5ef7363c5b05f0f84dc9a3f0143d30661bc",
+  "mappings": [
+    {
+      "local_commit": "1e74d7be38727c87740bd9d2c8083c26f954edf3",
+      "remote_commit": "1ce6231b3beeedb9e7a83fad0e8bdbc99cfef5ea",
+      "tree_sha": "c582c5a192f405b4efc2cadaaf909202dd0f71cf"
+    },
+    {
+      "local_commit": "bb78ff2ad683fb03cbb0aeb926a4ba048b96fdf6",
+      "remote_commit": "9a752d41f2a241baa8913bb60ee87379830b12a6",
+      "tree_sha": "5467ddb3076eb0eb4c22a6d2de267dd2679b6dbe"
+    },
+    {
+      "local_commit": "9ccecbf390d1a6518b0e421a82e16746be47abdb",
+      "remote_commit": "2f40fda591f99241b43b1b9745d74711b5cd70ce",
+      "tree_sha": "b60d26220c129dfd3521309d0f910af1c3811178"
+    },
+    {
+      "local_commit": "ecd7d029862e8dcadc9be9335e34e857eb692cbf",
+      "remote_commit": "76b603599d0f7f08a3228d0d018d5271595c27a7",
+      "tree_sha": "20229b689034a341862a54467a49dc0cb49c2156"
+    },
+    {
+      "local_commit": "12a31f8240e7457f249c6dbe1f76dc2dc0c12927",
+      "remote_commit": "ef507a1941c5c9772ab7689e160142a860294e03",
+      "tree_sha": "3154edc78c086d5f299d931b49ad038219aa9c06"
+    },
+    {
+      "local_commit": "5c962fa68a165565c931bef9c932083d345c1848",
+      "remote_commit": "f4877aca488c0ab58a228034733c2a4e0b3c5420",
+      "tree_sha": "d3397577f0c2cb0069b120e52556fa0dc8fbe6e8"
+    },
+    {
+      "local_commit": "112dd4c0d28012437f2ca2ad63da3cc03263b432",
+      "remote_commit": "6a7da16e3a7abc41b1a5d86e7cf68519093951f5",
+      "tree_sha": "5cd2678079c14af6391752648994788f78ca211d"
+    },
+    {
+      "local_commit": "d80a8a1de18d7fa29c4867a8a6e921c51208ab07",
+      "remote_commit": "73f4e5ef7363c5b05f0f84dc9a3f0143d30661bc",
+      "tree_sha": "bc94d7eea1156cdb3be89948003d5fa2d608eddf"
+    }
+  ],
+  "scope": "Every mapped remote commit has the exact same Git tree as its local original. Later publication-documentation commits are outside this source-history map.",
+  "pending_annotations": "explicitly accepted as pending by Alvaro"
+}
