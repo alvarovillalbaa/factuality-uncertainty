@@ -2,9 +2,9 @@
 
 Last updated: 2026-10-31
 
-The software and synthetic study are committed locally. Full spec completion
-is not claimed: independent annotations, real-reference tasks and publication
-remain open. The user authorized branch/commit/PR operations; no approval for
+The software and synthetic study are committed and published in draft PR #1.
+Full research completion is not claimed: independent annotations and the real
+engineering-reference extension remain pending. The user authorized branch/commit/PR operations; no approval for
 new provider spend, physical control, dependencies, production or infrastructure
 was inferred.
 
@@ -23,12 +23,12 @@ was inferred.
 | T06: pilot/calibration | Corrected 720-row pilot; planning.json; twelve calibration families; committed freeze before outcomes | Computational evidence present; independent pilot labels pending |
 | T07: baselines/ablations | Twelve arms, fixed answers and evidence; all 6,480 original rows; latency diagnostics corrected before final run | Synthetic controlled filtering comparison; real reader/retrieval effectiveness untested |
 | T08: audit/shift | Twelve shifted families; 45 blinded cases; annotation import validation, disagreement retention and explicit adjudication requirement | Distribution shift run; independent final annotation/adjudication pending |
-| T09: standalone library/CLI | Public API, project entry point, examples, isolated source CLI/checks | Source execution proven; fresh installation and remote publication pending |
+| T09: standalone library/CLI | Public API, project entry point, examples, isolated source CLI/checks, draft PR #1 | Source execution and publication proven; fresh installation not run |
 | T10: report/limitations | reports/research.md, complete analysis and provenance, FND-01 exports | Provisional conclusion; full research release remains open |
 | G01: support or evidence absence | Main verdict citations or explicit exclusion/absence reasons; scope leak negative fixture | Proven in bounded fixtures |
 | G02: deliberate quantity/time failures | Unit tests and exact deterministic main replay | Proven in declared dimensions |
 | G04: abstention/completeness/conflicts/shift | Full analysis, risk curves, both claim/question denominators and shifted-source false answers | Present, provisional design labels |
-| G05: reproducible full conclusion | source-export.json, reports/research.md, immutable inputs and original outcomes | Provisional replay passes; independent evidence and remaining source tracks prevent full completion |
+| G05: reproducible full conclusion | source-export-final.json, reports/research.md, immutable inputs and original outcomes | Provisional replay passes; independent evidence and remaining source tracks prevent full completion |
 
 Focused checks: 29 T2 unit tests; 720 corrected pilot and 6,480 final row replays;
 49 FND-01 artifact/result records; network-disabled gitless source export and CLI;
@@ -42,8 +42,8 @@ was respected by avoiding gated installations; no unrelated files were deleted.
 
 Next: obtain the two independent annotation files against audit/packet.json,
 record disagreements and adjudication, choose rights-cleared real-reference
-tasks and qualified reviewers before any empirical extension, and resolve the
-remote publication path. New evidence requires a new report/protocol version;
+tasks and qualified reviewers before any empirical extension. Publication is
+recorded in docs/publication.md. New evidence requires a new report/protocol version;
 never alter original labels or claim that replay creates new samples.
 
 Alvaro explicitly chose to leave independent annotation pending on 2026-10-31.
