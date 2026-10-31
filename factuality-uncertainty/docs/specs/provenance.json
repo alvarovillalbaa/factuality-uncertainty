@@ -1,0 +1,12 @@
+{
+  "archive_name": "eng-research-specs-2026-10-28.zip",
+  "archive_sha256": "d3c4fd896790fbab3d627c507e5daa8c967680748c724f5975547cf51bf4d935",
+  "members": {
+    "00-portfolio-architecture.md": "3c79b0a4d580bace246c7db63966c065fb0a7d6c00088673fd5c8b7f83bfe9d8",
+    "01-research-method.md": "4b81599ed7548e9200e8efd3319737c00a8a6ad8f9478b28cfb0787c1cd59d8e",
+    "02-interface-contracts.md": "0f63455ea2dc622dcb3ea37f90b3dc419acb79120f09c9a920577dc908d68499",
+    "03-execution-plan.md": "53847ec5dfab0ce285f18b45ec6d4ddf0dfa150ff4a448a9abf910d7a1d08945",
+    "04-decisions-and-assumptions.md": "c5c77633caeb37dd08b634dbc6995ed200e6d2405234691d02e07e5b97c2ec55",
+    "specs/ai/AI-02-factuality-uncertainty.md": "5480549ae9c5318f2a1af377092ba75f5480873904310bf706591025ab7e891f"
+  }
+}

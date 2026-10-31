@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "factuality-uncertainty"
+version = "0.1.0"
+description = "Local source-linked claim verification and calibrated abstention"
+requires-python = ">=3.11"
+readme = "README.md"
+dependencies = ["research-contracts==0.1.0"]
+
+[project.scripts]
+factuality-uncertainty = "factuality_uncertainty.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
