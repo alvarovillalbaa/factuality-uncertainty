@@ -1,0 +1,27 @@
+{
+  "answer": "device-0 mode is blue.",
+  "bundle_id": "development-0-supported",
+  "claims": [
+    {
+      "answer_span": [
+        0,
+        22
+      ],
+      "as_of": "2026-01-10T00:00:00Z",
+      "assumption_refs": [],
+      "claim_id": "development-0-supported-c1",
+      "claim_type": "text",
+      "domain": "invented-electrical",
+      "model_confidence": 0.55,
+      "predicate": "mode is",
+      "qualifiers": [],
+      "subject": "device-0",
+      "text": "device-0 mode is blue.",
+      "value": "blue"
+    }
+  ],
+  "domain": "invented-electrical",
+  "family": "family-0",
+  "raw_probability": 0.55,
+  "version": "0.1.0"
+}

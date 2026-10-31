@@ -1,0 +1,33 @@
+{
+  "sources": [
+    {
+      "access_scope": "public",
+      "as_of": "2026-01-01T00:00:00Z",
+      "domain": "invented-electrical",
+      "facts": [
+        {
+          "assumption_refs": [],
+          "predicate": "mode is",
+          "qualifiers": [],
+          "quote_span": [
+            0,
+            22
+          ],
+          "subject": "device-0",
+          "valid_from": "2026-01-01T00:00:00Z",
+          "valid_until": null,
+          "value": "blue"
+        }
+      ],
+      "license": "CC0-1.0 synthetic fixture",
+      "published_at": "2026-01-01T00:00:00Z",
+      "quality": "invented reference; authority is assumed only within this fixture",
+      "retrieved_at": "2026-01-20T00:00:00Z",
+      "sha256": "2f79a49e738de056c9fb1eb5912fec4432e8f0d0150901833500c104b729070d",
+      "source_id": "development-0-supported-source",
+      "text": "device-0 mode is blue.",
+      "version": "1.0.0"
+    }
+  ],
+  "version": "0.1.0"
+}
