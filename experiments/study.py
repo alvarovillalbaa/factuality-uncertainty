@@ -73,10 +73,27 @@ def evaluate(row, arm, calibrator):
     # diagnostic: it cannot invent missing, denied or future facts.
     evidence = row["evidence"]
     started = time.perf_counter_ns()
-    result = verify(row["claims"], evidence, POLICIES[arm], calibrator=calibrator)
-    elapsed_ns = time.perf_counter_ns() - started
+    issued_citations = []
+    baseline = arm in {"direct", "retrieval", "citations"}
+    if baseline:
+        if arm != "direct":
+            for claim in row["claims"]["claims"]:
+                candidates = [(s, f) for s in evidence["sources"] if s["access_scope"] == "public"
+                              for f in s["facts"] if f["subject"] == claim["subject"] and f["predicate"] == claim["predicate"]]
+                if arm == "citations" and candidates:
+                    source, fact = candidates[0]
+                    issued_citations.append({"claim_id": claim["claim_id"], "source_id": source["source_id"],
+                                             "quote_span": fact["quote_span"]})
+        elapsed_ns = time.perf_counter_ns() - started
+        diagnostic_started = time.perf_counter_ns()
+        result = verify(row["claims"], evidence, POLICIES[arm], calibrator=calibrator)
+        diagnostic_elapsed_ns = time.perf_counter_ns() - diagnostic_started
+    else:
+        result = verify(row["claims"], evidence, POLICIES[arm], calibrator=calibrator)
+        elapsed_ns = time.perf_counter_ns() - started
+        diagnostic_elapsed_ns = 0
     factual = [x for x in result["results"] if x["state"] != "not_fact_checkable"]
-    if arm in {"direct", "retrieval", "citations"}:
+    if baseline:
         action = "answer"
         rank = row["raw_probability"]
     elif arm == "abstention":
@@ -87,7 +104,9 @@ def evaluate(row, arm, calibrator):
         rank = sum(x["state"] == "supported" for x in factual) / max(1, len(factual))
     return {"row_id": row["row_id"], "family": row["family"], "split": row["split"],
             "arm": arm, "action": action, "rank": rank, "raw_probability": row["raw_probability"],
-            "result": result, "elapsed_ns": elapsed_ns, "provider_calls": 0, "provider_spend_eur": 0}
+            "result": result, "result_role": "offline-scoring-diagnostic" if baseline else "method-output",
+            "issued_citations": issued_citations, "elapsed_ns": elapsed_ns,
+            "diagnostic_elapsed_ns": diagnostic_elapsed_ns, "provider_calls": 0, "provider_spend_eur": 0}
 
 
 def summary(selected, tasks, labels):
@@ -109,12 +128,16 @@ def summary(selected, tasks, labels):
                 claims += 1
                 unsupported += label["claim_states"][i] not in {"supported", "not_fact_checkable"}
                 correct_claims += label["claim_correct"][i]
-            if row["arm"] != "direct":
+            if row["arm"] not in {"direct", "retrieval", "citations"}:
                 citations += len(verdict["support"])
                 # A supportive quote can remain relevant even when another source contradicts it.
                 good_citations += len(verdict["support"]) * (label["claim_states"][i] == "supported" or
                                                            tasks[row["row_id"]]["kind"] == "conflict")
-            if verdict["claim_type"] == "numeric":
+            if row["arm"] == "citations":
+                current = [c for c in row["issued_citations"] if c["claim_id"] == verdict["claim_id"]]
+                citations += len(current)
+                good_citations += len(current) * (label["claim_states"][i] == "supported" or tasks[row["row_id"]]["kind"] == "conflict")
+            if verdict["claim_type"] == "numeric" and row["arm"] not in {"direct", "retrieval", "citations"}:
                 numeric_errors += not label["claim_correct"][i]
                 numeric_detected += not label["claim_correct"][i] and any(c["status"] == "fail" for c in verdict["numeric_checks"])
                 numeric_negatives += label["claim_correct"][i]
@@ -125,6 +148,7 @@ def summary(selected, tasks, labels):
     calibrated = scores([r["result"]["question_confidence"]["empirical_calibrated"]["value"] for r in calibrated_rows],
                         [labels[r["row_id"]]["correct"] for r in calibrated_rows]) if calibrated_rows else None
     return {"scheduled": len(selected), "attempted": len(selected), "unattempted": 0,
+            "verification_role": selected[0]["result_role"],
             "independent_source_families": len({r["family"] for r in selected}), "answered": len(asserted),
             "coverage": len(asserted) / len(selected), "abstention": sum(r["action"] == "abstain" for r in selected),
             "escalation": sum(r["action"] == "review" for r in selected),
@@ -141,7 +165,8 @@ def summary(selected, tasks, labels):
             "retrieved_but_misread_claims": misread,
             "states": dict(states), "reason_codes": dict(reasons), "raw_calibration": raw,
             "empirical_calibration": calibrated, "calibration_unavailable": len(selected) - len(calibrated_rows),
-            "latency_ms": {"median": statistics.median(elapsed), "p95": elapsed[math.ceil(.95 * len(elapsed)) - 1]},
+            "latency_ms": {"median": statistics.median(elapsed), "p95": elapsed[math.ceil(.95 * len(elapsed)) - 1],
+                           "offline_diagnostic_total": sum(r["diagnostic_elapsed_ns"] for r in selected) / 1e6},
             "provider_spend_eur": 0, "human_audit_minutes": None}
 
 
@@ -177,6 +202,7 @@ def analyze(records, tasks, labels, protocol):
         distribution = sorted(statistics.mean(rng.choices(paired, k=len(paired))) for _ in range(protocol["bootstrap_resamples"]))
         matched[split + ":paired"] = {"independent_families": len(groups),
             "difference_correct_scheduled_at_matched_coverage": statistics.mean(paired),
+            "paired_family_variance": statistics.variance(paired) if len(paired) > 1 else None,
             "cluster_interval_95": [distribution[int(.025 * len(distribution))], distribution[int(.975 * len(distribution))]],
             "inference": "descriptive conditional on invented templates; not human/model/physical population proof"}
     return {"summaries": summaries, "matched_coverage": matched, "risk_coverage": curves,
@@ -197,17 +223,40 @@ def run(stage):
     target.mkdir(parents=True)
     started = time.perf_counter()
     records = []
-    for row in selected:
-        for arm in POLICIES:
-            records.append(evaluate(row, arm, maps[arm]))
+    partial = target / "rows.partial.jsonl"
+    with partial.open("wb") as stream:
+        for row in selected:
+            for arm in POLICIES:
+                if time.perf_counter() - started > protocol["budget"]["max_wall_seconds"]:
+                    raise ValueError("study_wall_budget_exhausted_partial_retained")
+                try:
+                    record = evaluate(row, arm, maps[arm])
+                except Exception as exc:
+                    stream.write(encode({"row_id": row["row_id"], "arm": arm, "failure": str(exc)}))
+                    stream.flush()
+                    raise
+                records.append(record)
+                stream.write(encode(record))
+                stream.flush()
     (target / "rows.json.gz").write_bytes(gzip.compress(encode(records), mtime=0))
     write(target / "analysis.json", analyze(records, {r["row_id"]: r for r in rows}, labels, protocol))
+    if stage == "pilot":
+        analysis = load(target / "analysis.json")
+        variance = analysis["matched_coverage"]["pilot:paired"]["paired_family_variance"]
+        write(target / "planning.json", {"pilot_families": len({r["family"] for r in selected}),
+            "paired_family_variance": variance, "practical_effect": 0.05,
+            "approximate_required_families": math.ceil((1.96 + .84)**2 * variance / .05**2),
+            "test_allocation": 24, "shift_allocation": 12,
+            "decision": "Descriptive estimation only; repeated templates do not establish empirical population power.",
+            "estimated_main_seconds": (time.perf_counter() - started) * 9,
+            "provider_spend_eur": 0, "human_annotation_minutes": None})
     write(target / "execution.json", {"source_revision": source_revision(), "python": sys.version,
         "protocol_sha256": digest(protocol), "records_sha256": hashlib.sha256((target / "rows.json.gz").read_bytes()).hexdigest(),
         "scheduled": len(selected) * len(POLICIES), "attempted": len(records), "unattempted": 0,
         "elapsed_seconds": time.perf_counter() - started, "provider_calls": 0, "provider_spend_eur": 0,
         "excluded_arms": ["hosted providers", "licensed benchmarks", "human annotation"],
         "missing_measurements": ["physical energy", "GPU hours (no GPU)", "human audit time"]})
+    partial.unlink()
     print({"stage": stage, "records": len(records), "output": str(target.relative_to(ROOT))})
 
 
@@ -222,7 +271,7 @@ def replay(stage):
     for record in records:
         fresh = evaluate(tasks[record["row_id"]], record["arm"], maps[record["arm"]])
         for key in record:
-            if key != "elapsed_ns" and record[key] != fresh[key]:
+            if key not in {"elapsed_ns", "diagnostic_elapsed_ns"} and record[key] != fresh[key]:
                 raise ValueError("replay_difference:" + key)
     if analyze(records, tasks, labels, load(ROOT / "protocols/study.json")) != load(ROOT / "reports" / stage / "analysis.json"):
         raise ValueError("analysis_replay_difference")

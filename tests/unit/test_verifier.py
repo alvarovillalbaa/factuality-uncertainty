@@ -173,6 +173,15 @@ class CalibrationAndExportTests(unittest.TestCase):
             self.assertEqual(predict(fitted, 0.75, domain=domain, family=family, policy_sha256=policy)["reason"], reason)
         self.assertEqual(predict(fitted, 0.75, domain="electrical", family="new", policy_sha256="abc")["value"], 0.5)
 
+    def test_question_probability_never_becomes_claim_probability(self):
+        row, _ = case("development", 1, "supported", "short-question")
+        fitted = fit(self.rows(), policy_sha256=digest(DEFAULT_POLICY))
+        row["claims"].update(domain="electrical", family="new", raw_probability=0.75)
+        result = verify(row["claims"], row["evidence"], calibrator=fitted)
+        self.assertEqual(result["question_confidence"]["empirical_calibrated"]["value"], 0.5)
+        self.assertIsNone(result["results"][0]["confidence"]["empirical_calibrated"])
+        self.assertEqual(select(result, {"minimum_probability": 0.6})["action"], "abstain")
+
     def test_proper_scores_and_missing_bins(self):
         self.assertEqual(scores([0.9, 0.1], [True, False])["count"], 2)
         self.assertAlmostEqual(scores([0.9, 0.1], [True, False])["brier"], 0.01)
