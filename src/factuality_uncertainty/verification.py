@@ -5,6 +5,7 @@ import re
 
 from .io import digest, encode
 from .numeric import check, number
+from .schema import CLAIM_BUNDLE, EVIDENCE_BUNDLE, validate
 
 STATES = {"supported", "contradicted", "insufficient_evidence", "not_fact_checkable"}
 DEFAULT_POLICY = {"adapter": "structured", "scopes": ["public"],
@@ -34,6 +35,8 @@ def _unique(items, field):
 def validate_input(bundle, evidence):
     if len(encode([bundle, evidence])) > 16 * 1024 * 1024:
         raise ValueError("input_too_large")
+    validate(bundle, CLAIM_BUNDLE)
+    validate(evidence, EVIDENCE_BUNDLE)
     if bundle.get("version") != "0.1.0" or evidence.get("version") != "0.1.0":
         raise ValueError("unknown_version")
     claims = bundle["claims"]
