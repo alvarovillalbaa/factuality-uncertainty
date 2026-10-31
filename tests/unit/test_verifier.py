@@ -111,6 +111,16 @@ class VerifierTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unknown_policy"):
             verify(row["claims"], row["evidence"], {"exec": True})
 
+    def test_output_contract_rejects_missing_provenance(self):
+        from jsonschema import Draft202012Validator, FormatChecker
+        root = Path(__file__).resolve().parents[2]
+        validator = Draft202012Validator(load(root / "schemas/verification.schema.json"), format_checker=FormatChecker())
+        row, _ = self.fixture()
+        result = verify(row["claims"], row["evidence"])
+        self.assertEqual(list(validator.iter_errors(result)), [])
+        result["results"][0]["support"][0].pop("sha256")
+        self.assertTrue(list(validator.iter_errors(result)))
+
     def test_confidence_types_and_missing_calibration(self):
         row, _ = self.fixture()
         result = verify(row["claims"], row["evidence"])

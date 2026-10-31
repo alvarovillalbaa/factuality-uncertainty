@@ -44,6 +44,16 @@ def main():
     study = runpy.run_path(str(root / "experiments/study.py"))
     study["replay"]("pilot")
     study["replay"]("main")
+    import gzip
+    import json
+    from jsonschema import Draft202012Validator, FormatChecker
+    validator = Draft202012Validator(load(root / "schemas/verification.schema.json"), format_checker=FormatChecker())
+    for stage in ["pilot", "main"]:
+        raw = (root / "reports" / stage / "rows.json.gz").read_bytes()
+        if hashlib.sha256(raw).hexdigest() != load(root / "reports" / stage / "execution.json")["records_sha256"]:
+            raise ValueError("retained_rows_digest_mismatch")
+        for record in json.loads(gzip.decompress(raw)):
+            validator.validate(record["result"])
     from factuality_uncertainty.cli import main as cli
     first = load(root / "fixtures/tasks.json")[0]
     with tempfile.TemporaryDirectory(prefix="ai02-cli-") as tmp:

@@ -30,7 +30,7 @@ was inferred.
 | G04: abstention/completeness/conflicts/shift | Full analysis, risk curves, both claim/question denominators and shifted-source false answers | Present, provisional design labels |
 | G05: reproducible full conclusion | source-export.json, reports/research.md, immutable inputs and original outcomes | Provisional replay passes; independent evidence and remaining source tracks prevent full completion |
 
-Focused checks: 28 T2 unit tests; 720 corrected pilot and 6,480 final row replays;
+Focused checks: 29 T2 unit tests; 720 corrected pilot and 6,480 final row replays;
 49 FND-01 artifact/result records; network-disabled gitless source export and CLI;
 git diff --check. Original 720-row timing-contaminated pilot remains retained
 as superseded evidence rather than being silently replaced.
@@ -45,3 +45,11 @@ record disagreements and adjudication, choose rights-cleared real-reference
 tasks and qualified reviewers before any empirical extension, and resolve the
 remote publication path. New evidence requires a new report/protocol version;
 never alter original labels or claim that replay creates new samples.
+
+Alvaro explicitly chose to leave independent annotation pending on 2026-10-31.
+That permits handing off this provisional implementation and report; it does
+not create annotation evidence or promote the research/product gate. The real
+engineering-reference track remains a separately gated empirical extension.
+Output schema and figure generation were added after the main run as validation
+and reporting artifacts. Frozen computational inputs and original outcomes were
+not changed.

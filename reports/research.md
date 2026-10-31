@@ -68,7 +68,9 @@ At matched coverage, unsupported asserted-claim rates are 65.12% versus 0% on
 test and 65.63% versus 0% under shift. Selection IDs are retained. Whole-answer
 correctness and claim correctness have different denominators; the full
 risk–coverage curves, reference-claim recall and citation precision diagnostics
-are in analysis.json. The strict test arm recovers only 19.05% of the reference
+are in analysis.json. Standalone figures show [test reliability](figures/reliability.svg),
+[test risk–coverage](figures/risk-coverage-test.svg) and
+[shift risk–coverage](figures/risk-coverage-shift.svg). The strict test arm recovers only 19.05% of the reference
 claim inventory when abstained answers count as missing. Opinion spans are
 kept outside factual assertion denominators, while the reference inventory
 conservatively retains supplied claim slots.
@@ -119,7 +121,7 @@ provisional conclusion, not a completed AI-02 research release.
 ## Reproduction
 
 README.md gives replay, CLI, unit and isolated-export commands. The source export
-receipt records 28 tests, both original corrected pilot and final score replay,
+receipt records 29 tests, both corrected pilot and final score replay,
 49 FND-01 envelopes, and CLI behavior with networking disabled. Existing
 dependency versions and FND-01 revision are captured in that receipt; the
 dependency snapshot was recorded after the study in the same session with no

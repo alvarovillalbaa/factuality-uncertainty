@@ -9,6 +9,10 @@ before any verdict. The CLI never resolves network or file locators in corpus
 content. JSON files are supplied explicitly, limited to 16 MiB each and checked
 for duplicate keys, non-finite numbers and invalid UTF-8 encodings.
 
+Input JSON Schemas are exported by `python -m factuality_uncertainty.schema`.
+The output contract is schemas/verification.schema.json; isolated verification
+validates every retained study payload against it.
+
 ClaimBundle has `version`, `bundle_id`, `answer` and a nonempty `claims` array.
 Each claim has a unique `claim_id`, exact Unicode character `answer_span`
 (`[start,end)`), `text`, `claim_type` (`text`, `numeric`, `opinion`), `as_of`,
